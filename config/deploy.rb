@@ -8,6 +8,8 @@ require 'mina/rsync'
 # require 'mina/rbenv'  # for rbenv support. (http://rbenv.org)
 set :domain, 'prod-puppet1-ep.tops.gdi'
 set :deploy_to, '/opt/smart-proxy'
+set :current, deploy_to + '/current'
+set :shared, deploy_to + '/shared'
 set :repository, 'git@github.com:teaforthecat/smart-proxy.git'
 set :branch, 'master'
 set :user, 'puppet-deployer'
@@ -23,6 +25,7 @@ set :bundle_path, '.bundle'
 task :setup do
   queue! %[mkdir -p "#{deploy_to}"]
   queue! %[mkdir -p "#{deploy_to}/shared/deploy"]
+  queue! %[mkdir -p "#{deploy_to}/shared/bundle"]
   queue! %[mkdir -p "#{deploy_to}/shared/log"]
   queue! %[mkdir -p "#{deploy_to}/shared/pids"]
   queue! %[mkdir -p "#{deploy_to}/tmp/deploy"]
@@ -33,10 +36,11 @@ task :setup_init do
 end
 
 task :deploy do
-  deploy do
-    puts settings.build_path
-    invoke 'bundle:install'
+  deploy do    
     invoke 'rsync:deploy'
+    echo_cmd "echo $build_path"
+    queue! "ln -s #{current}/.bundle #{shared}/bundle"
+    queue! "cd #{current} && bundle install --binstubs --path .bundle --deployment --without development:test"
     # to :launch do
     #   queue "touch #{deploy_to}/tmp/restart.txt"
     # end
