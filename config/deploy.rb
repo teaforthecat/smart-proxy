@@ -11,7 +11,7 @@ set :deploy_to, '/opt/smart-proxy'
 set :repository, 'git@github.com:teaforthecat/smart-proxy.git'
 set :branch, 'master'
 set :user, 'puppet-deployer'
-set :rsync_options, %w[--recursive --delete --delete-excluded --exclude .git*]
+set :rsync_options, %w[--recursive --executability --delete --delete-excluded --exclude .git*]
 set :ssh_options, '-q'
 
 set :bundle_options, '--binstubs --path .bundle --deployment --without development,bmc,krb5,test '
@@ -26,7 +26,7 @@ task :setup do
 end
 
 task :setup_init do
-  queue! "sudo cp #{deploy_to}/current/config/smart-proxy.init.d /etc/init.d/smart-proxy"
+  queue! "sudo cp -p #{deploy_to}/current/config/smart-proxy.init.d /etc/init.d/smart-proxy"
 end
 
 task :deploy do
