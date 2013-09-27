@@ -11,10 +11,11 @@ set :deploy_to, '/opt/smart-proxy'
 set :repository, 'git@github.com:teaforthecat/smart-proxy.git'
 set :branch, 'master'
 set :user, 'puppet-deployer'
-set :rsync_options, %w[--recursive --executability --delete --delete-excluded --exclude .git*]
+set :rsync_options, %w[-q --recursive --executability --delete --delete-excluded --exclude .git*]
 set :ssh_options, '-q'
 
-set :bundle_options, '--binstubs --path .bundle --deployment --without development,bmc,krb5,test '
+set :bundle_options, '--binstubs --path .bundle --deployment --without development:bmc:krb5:test '
+set :bundle_path, '.bundle'
 
 # root operations:
 # mkdir -p /opt/smart-proxy && chown -R puppet-deployer:puppet-deployer /opt/smart-proxy
@@ -33,6 +34,8 @@ end
 
 task :deploy do
   deploy do
+    puts settings.build_path
+    invoke 'bundle:install'
     invoke 'rsync:deploy'
     # to :launch do
     #   queue "touch #{deploy_to}/tmp/restart.txt"
