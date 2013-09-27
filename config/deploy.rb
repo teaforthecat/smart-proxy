@@ -22,6 +22,8 @@ set :bundle_options, '--binstubs --path .bundle --deployment --without developme
 task :setup do
   queue! %[mkdir -p "#{deploy_to}"]
   queue! %[mkdir -p "#{deploy_to}/shared/deploy"]
+  queue! %[mkdir -p "#{deploy_to}/shared/log"]
+  queue! %[mkdir -p "#{deploy_to}/shared/pids"]
   queue! %[mkdir -p "#{deploy_to}/tmp/deploy"]
 end
 

@@ -1,14 +1,13 @@
 ---
 :trusted_hosts:
   - prod-foreman1-ep.tops.gdi
-:port: 8443
 
 # enable the daemon to run in the background
-:daemon: true
-:daemon_pid: /var/run/foreman-proxy/foreman-proxy.pid
+# :daemon: true
+# :daemon_pid: /var/run/foreman-proxy/foreman-proxy.pid
 
-:log_file: /var/log/foreman-proxy/proxy.log
-:log_level: DEBUG
+# :log_file: /var/log/foreman-proxy/proxy.log
+# :log_level: DEBUG
 
 :puppetca: true
 :ssldir: /var/lib/puppet/ssl
