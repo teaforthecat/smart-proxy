@@ -3,7 +3,6 @@ tags
 .idea
 logs
 *swp
-Gemfile.lock
 bundler.d/Gemfile.local.rb
 .rbenv*
 .rvmrc*
