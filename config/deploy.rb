@@ -26,8 +26,7 @@ task :setup do
 end
 
 task :setup_init do
-  queue! %[sudo cp "#{deploy_to}"/current/config/smart-proxy.init.d /etc/init.d/smart-proxy ]
-  queue! %[sudo ln -s /etc/init.d/smart-proxy /etc/rc.d/init.d/smart-proxy ]
+  queue! "sudo cp #{deploy_to}/current/config/smart-proxy.init.d /etc/init.d/smart-proxy"
 end
 
 task :deploy do
