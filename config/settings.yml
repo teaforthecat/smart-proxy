@@ -1,0 +1,42 @@
+---
+:trusted_hosts:
+  - prod-foreman1-ep.tops.gdi
+:port: 8443
+
+# enable the daemon to run in the background
+:daemon: true
+:daemon_pid: /var/run/foreman-proxy/foreman-proxy.pid
+
+:log_file: /var/log/foreman-proxy/proxy.log
+:log_level: DEBUG
+
+:puppetca: true
+:ssldir: /var/lib/puppet/ssl
+:puppetdir: /etc/puppetlabs/puppet
+:puppet: true
+:puppet_provider: mcollective
+:puppet_conf: /etc/puppetlabs/puppet/puppet.conf
+
+
+
+# maybe use ssl
+
+# if enabled, all communication would be verfied via SSL
+# NOTE that both certificates need to be signed by the same CA in order for this to work
+# see http://theforeman.org/projects/smart-proxy/wiki/SSL for more information
+#:ssl_certificate: ssl/certs/fqdn.pem
+#:ssl_ca_file: ssl/certs/ca.pem
+#:ssl_private_key: ssl/private_keys/fqdn.key
+# the hosts which the proxy accepts connections from
+
+
+
+# commenting the following lines would mean every verified SSL connection allowed
+
+
+
+#other stuff
+:tftp: false
+:dns: false
+:dhcp: false
+:bmc: false
