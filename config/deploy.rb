@@ -38,11 +38,10 @@ end
 task :deploy do
   deploy do    
     invoke 'rsync:deploy'
-    echo_cmd "echo $build_path"
-    queue! "ln -s #{current}/.bundle #{shared}/bundle"
-    queue! "cd #{current} && bundle install --binstubs --path .bundle --deployment --without development:test"
-    # to :launch do
-    #   queue "touch #{deploy_to}/tmp/restart.txt"
-    # end
+  end
+  queue! "ln -sf #{shared}/bundle #{current}/.bundle "
+  queue! "cd #{current} && bundle install --binstubs --path .bundle --deployment --without development:test"
+  to :launch do
+    echo_cmd "sudo service smart-proxy restart"
   end
 end
