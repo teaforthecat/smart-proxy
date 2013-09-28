@@ -36,12 +36,13 @@ task :setup_init do
 end
 
 task :deploy do
-  deploy do    
+  deploy do
     invoke 'rsync:deploy'
   end
-  queue! "ln -sf #{shared}/bundle #{current}/.bundle "
-  queue! "cd #{current} && bundle install --binstubs --path .bundle --deployment --without development:test"
+  queue "ln -sf #{shared}/bundle #{current}/.bundle "
+  queue "ln -sf #{shared}/log #{current}/log "
+  queue "cd #{current} && bundle install --binstubs --path .bundle --deployment --without development:test"
   to :launch do
-    echo_cmd "sudo service smart-proxy restart"
+    queue "sudo service smart-proxy restart"
   end
 end
